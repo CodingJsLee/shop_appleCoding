@@ -1,19 +1,43 @@
-import { useParams } from "react-router-dom";
 
-function DetailItem(props){
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+
+
+
+function DetailItem(props) {
+    // 언제 씀? : 실행시점이 약간 다르다. 렌더링 후 실행됨
+    useEffect(() => {
+        console.log("헬로월드");
+        // for (var i = 0; i < 10000; i++){
+        //     console.log(1);
+        // }
+    });
+    let { id } = useParams();
+
+    const mainData = [...props.mainDisplayData];
+    console.log(mainData[0]);
+    console.log(mainData[1]);
+    console.log(mainData[2]);
+    
+    const fixedId = mainData.find((element) => element.id == id);
+
+    let[count, setCount] = useState(0);
     // 현재 url 파라미터 정보가 남음
-    let {id} = useParams(); 
-    console.log(">>> : "+ id);
+    
+    // console.log(">>> : "+ id);
     return(
-    <div className="container">
+        <div className="container">
+            {count}
+            <button onClick={()=>{ setCount(count+1) }}>버튼</button>
         <div className="row">
             <div className="col-md-6">
-                <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+                    <img src={ fixedId.imges} width="80%" />
             </div>
             <div className="col-md-6">
-                <h4 className="pt-5">{props.mainDisplayData[0].title}</h4>
-                <p>{props.mainDisplayData[id].content}</p>
-                <p>{props.mainDisplayData[id].price}</p>
+                <h4 className="pt-5">{fixedId.title}</h4>
+                <p>{fixedId.content}</p>
+                <p>{fixedId.price}</p>
                 <button className="btn btn-danger">주문하기</button> 
             </div>
         </div>

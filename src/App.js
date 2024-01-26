@@ -2,9 +2,7 @@ import "./App.css";
 import { Container, Nav, Navbar } from "react-bootstrap/";
 
 import reactMain from "./img/reactMain.png";
-import jsImg from "./img/js.png";
-import html5Img from "./img/html.png";
-import cssImg from "./img/css.png";
+
 import { useState } from "react";
 import mainData from "./data";
 import MainItem from "./components/MainItem";
@@ -12,15 +10,28 @@ import DetailItem from "./routes/DetailItem";
 import About from "./components/About";
 import { Routes, Route, Link, useNavigate, Outlet,  } from 'react-router-dom'
 import Event from "./components/Event";
+import { Button } from "bootstrap";
 
 
 function App() {
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
-  const [imges, setImges] = useState([jsImg, html5Img, cssImg]);
-  const [subject, setSubject] = useState(["자바스크립트", "HTML", "CSS"]);
+  const [sortChecker, setSortChecker] = useState(0);
+
   const [imgIdx, setImgIdx] = useState(0);
   let navigate = useNavigate();
+  function mainDataSort() {
+    let sortTmp = [...mainData];
+    
+    if (sortChecker === 0) {
+      setMainDisplayData(sortTmp.sort((a, b) => b.id - a.id));
+      setSortChecker(1);
+    } else {
+      setMainDisplayData(sortTmp.sort((a, b) => a.id - b.id));
+      setSortChecker(0);
+    }
+    
 
+  }
 
   // 라우터로 페이지 나누는법
   return (
@@ -51,14 +62,12 @@ function App() {
                 <div className="row">
                   {
                     // 컴포넌트화
-                    imges.map((name, idx) => {
+                    mainDisplayData.map((name, idx) => {
                       console.log("idx", idx);
                       return (
                         <MainItem
                           idx={idx}
-                          img={imges}
                           mainDisplayData={mainDisplayData}
-                          subject={subject}
                         />
                       );
                     })
@@ -80,6 +89,9 @@ function App() {
         </Route>
         <Route path="*" element={<div>404 - page not found</div>}/>    
       </Routes>
+      <div>
+        <button onClick={()=>{ mainDataSort() }}>버튼</button>
+      </div>
     </div>
   );
 }
