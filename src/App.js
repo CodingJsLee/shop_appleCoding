@@ -58,15 +58,14 @@ function App() {
                   height: "300px",
                 }}
               ></div>
-              <div className="container">
+              <div className="container" >
                 <div className="row">
                   {
                     // 컴포넌트화
                     mainDisplayData.map((name, idx) => {
-                      console.log("idx", idx);
                       return (
-                        <MainItem
-                          idx={idx}
+                        <MainItem 
+                          idx={idx} key = {name} 
                           mainDisplayData={mainDisplayData}
                         />
                       );
