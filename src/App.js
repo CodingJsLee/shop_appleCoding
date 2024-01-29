@@ -11,7 +11,7 @@ import About from "./components/About";
 import { Routes, Route, Link, useNavigate, Outlet,  } from 'react-router-dom'
 import Event from "./components/Event";
 import { Button } from "bootstrap";
-
+import axios from 'axios';
 
 function App() {
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
@@ -41,7 +41,7 @@ function App() {
           <Navbar.Brand href="#home">리액트장인</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/0')}}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -65,18 +65,35 @@ function App() {
                     mainDisplayData.map((name, idx) => {
                       return (
                         <MainItem 
-                          idx={idx} key = {name} 
+                          idx={idx} key={idx.id} 
                           mainDisplayData={mainDisplayData}
                         />
                       );
                     })
                   }
+                  <div>
+                    <button onClick={() => {
+                    axios.get('https://codingapple1.github.io/shop/data2.json')
+                    .then((data) => {
+                      console.log(data.data);
+                      console.log(mainDisplayData);
+                      setMainDisplayData([...mainData, ...data.data]);
+                    })
+                    .catch((data) => {
+                      console.log('실패함ㅋ')
+                    })
+                    }}>서버요청
+                    </button>
+                  </div>
+                  <div>
+                    <button onClick={()=>{ mainDataSort() }}>버튼</button>
+                  </div>
                 </div>
               </div>
             </>
           }
         />
-        <Route path="/detail/:id" element={<DetailItem mainDisplayData={mainDisplayData}></DetailItem> } />
+        <Route path="/detail/:id" element={<DetailItem mainDisplayData={mainDisplayData} /> } />
 
         <Route path="/about" element={ <About></About> } >
           <Route path="member" element={ <div>member임</div> } />
@@ -88,9 +105,11 @@ function App() {
         </Route>
         <Route path="*" element={<div>404 - page not found</div>}/>    
       </Routes>
-      <div>
-        <button onClick={()=>{ mainDataSort() }}>버튼</button>
-      </div>
+      
+
+      
+
+
     </div>
   );
 }

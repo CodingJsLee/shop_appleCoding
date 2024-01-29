@@ -1,6 +1,7 @@
 import jsImg from "./img/js.png";
 import html5Img from "./img/html.png";
 import cssImg from "./img/css.png";
+import { useState } from "react";
 
 let mainData = [
   {
@@ -29,3 +30,4 @@ let mainData = [
 ];
 
 export default mainData;
+
