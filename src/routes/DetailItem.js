@@ -1,12 +1,17 @@
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-
+import { Context1 } from './../App';
 
 
 function DetailItem(props) {
+
+    let {재고} = useContext(Context1);
+    console.log(재고);
+
+
     let { id } = useParams();
     let [count, setCount] = useState(0);
     let [twoSecondModalSwitch, setTwoSecondModalSwitch] = useState(false);
@@ -101,20 +106,17 @@ function Taps(props) {
     //     <div>내용2</div>
     // }
     // </div>
-    
+    let { 재고 } = useContext(Context1);
     let returnTag;
     let [fade, setFade] = useState('');
 
     switch (props.taps) {
         case 0:
-            returnTag = <div>내용0</div>;
-            break;
+            returnTag = <div>{재고[0]}</div>;break;
         case 1:
-            returnTag = <div>내용1</div>;
-            break;
+            returnTag = <div>내용1</div>;break;
         case 2:
-            returnTag = <div>내용2</div>
-            break;
+            returnTag = <div>내용2</div>;break;
         default:
             returnTag = null;
     }

@@ -3,7 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap/";
 
 import reactMain from "./img/reactMain.png";
 
-import { useState } from "react";
+import { createContext, useState } from "react";
 import mainData from "./data";
 import MainItem from "./components/MainItem";
 import DetailItem from "./routes/DetailItem";
@@ -12,10 +12,16 @@ import { Routes, Route, Link, useNavigate, Outlet,  } from 'react-router-dom'
 import Event from "./components/Event";
 import { Button } from "bootstrap";
 import axios from 'axios';
+import Cart from "./components/Cart";
+
+// state보관함
+export let Context1 = createContext();
+
 
 function App() {
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
   const [sortChecker, setSortChecker] = useState(0);
+  const [재고] = useState([10, 11, 12]);
 
   const [imgIdx, setImgIdx] = useState(0);
   let navigate = useNavigate();
@@ -93,7 +99,16 @@ function App() {
             </>
           }
         />
-        <Route path="/detail/:id" element={<DetailItem mainDisplayData={mainDisplayData} /> } />
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{재고, mainData}}>
+            <DetailItem mainDisplayData={mainDisplayData} />
+          </Context1.Provider>
+          }
+        />
+
+        <Route path="/cart" element={
+          <Cart />
+        }></Route>
 
         <Route path="/about" element={ <About></About> } >
           <Route path="member" element={ <div>member임</div> } />
