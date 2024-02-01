@@ -56,7 +56,7 @@ function DetailItem(props) {
                 <img src={ fixedId.imges } width="80%" />
             </div>
             <div className="col-md-6">
-                <input type="text" onChange={ OnlyNum } />
+                <input type="text" onChange={ OnlyNum() } />
                 <h4 className="pt-5">{fixedId.title}</h4>
                 <p>{fixedId.content}</p>
                 <p>{fixedId.price}</p>
