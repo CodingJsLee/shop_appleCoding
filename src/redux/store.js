@@ -14,8 +14,8 @@ const stock = createSlice({
 let cart = createSlice({
     name : 'cart',
     initialState : [
-      {id : 0, name : 'White and Black', count : 2},
-      {id : 2, name : 'Grey Yordan', count : 1}
+      {id : 0, name : 'White and Black', count : 2,price:9999},
+      {id : 2, name : 'Grey Yordan', count : 1,price:111}
     ],
     reducers : {
       addCount(state, action){
@@ -42,16 +42,14 @@ let cart = createSlice({
       },
       addItem(state, action){
         // console.log(action.payload);
-        const check = state.find((item) => 
-            
-                
-                item.id === action.payload
-            
-            );
+        const tmpArr = action.payload;
+        const check = state.find((item) => item.id === tmpArr.id);
         if(!check){
             console.log('로직수행');
-            state.push(check);
-            console.log(state[2].id)
+            state.push(tmpArr);
+            state.map((a,i)=>{
+                console.log(state[i].price);
+            })
         }
         
 

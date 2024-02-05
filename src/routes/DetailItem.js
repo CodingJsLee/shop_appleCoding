@@ -63,7 +63,7 @@ function DetailItem(props) {
                 <p>{fixedId.content}</p>
                 <p>{fixedId.price}</p>
                 <button className="btn btn-danger" 
-                    onClick={()=>{ dispatch(addItem(fixedId.id)) }}>
+                    onClick={()=>{ dispatch(addItem(fixedId)) }}>
                 주문하기
                 </button> 
             </div>
