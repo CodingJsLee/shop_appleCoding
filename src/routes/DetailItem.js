@@ -4,12 +4,14 @@ import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { Context1 } from './../App';
-
+import { useDispatch, useSelector } from "react-redux";
+import { addItem} from '../redux/store'
 
 function DetailItem(props) {
-
+    let state = useSelector((state)=> state)// redux store 가져와줌
+    let dispatch = useDispatch(); // store.js로 요청보내주는 함수임
     let {재고} = useContext(Context1);
-    console.log(재고);
+    // console.log(재고);
 
 
     let { id } = useParams();
@@ -56,11 +58,14 @@ function DetailItem(props) {
                 <img src={ fixedId.imges } width="80%" />
             </div>
             <div className="col-md-6">
-                <input type="text" onChange={ OnlyNum() } />
+                <input type="text" onChange={ OnlyNum } />
                 <h4 className="pt-5">{fixedId.title}</h4>
                 <p>{fixedId.content}</p>
                 <p>{fixedId.price}</p>
-                <button className="btn btn-danger">주문하기</button> 
+                <button className="btn btn-danger" 
+                    onClick={()=>{ dispatch(addItem(fixedId.id)) }}>
+                주문하기
+                </button> 
             </div>
         </div>
         <Nav variant="tabs" defaultActiveKey="link0">

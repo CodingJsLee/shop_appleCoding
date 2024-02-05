@@ -5,7 +5,7 @@ import { useState } from "react";
 
 let mainData = [
   {
-    id: 0,
+    id: 3,
     title: "혼자공부하는 자바스크립트",
     content: "JavaScript",
     price: 67000,

@@ -13,12 +13,14 @@ import Event from "./components/Event";
 import { Button } from "bootstrap";
 import axios from 'axios';
 import Cart from "./components/Cart";
+import { useDispatch, useSelector } from "react-redux";
 
 // state보관함
 export let Context1 = createContext();
 
 
 function App() {
+
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
   const [sortChecker, setSortChecker] = useState(0);
   const [재고] = useState([10, 11, 12]);
@@ -47,7 +49,7 @@ function App() {
           <Navbar.Brand href="/">리액트장인</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail/0')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/2')}}>Detail</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
           </Nav>
         </Container>

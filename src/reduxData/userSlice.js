@@ -9,10 +9,13 @@ const user = createSlice({
         changeName(state) {
             state.name = 'park'
         },
+        increase(state){
+            state.age += 1
+        }
 
 
     }
 })
 
 export default user;
-export let { changeName, ageIncrease }  = user.actions
+export let { changeName , increase }  = user.actions
