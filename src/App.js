@@ -21,6 +21,15 @@ export let Context1 = createContext();
 
 function App() {
 
+  let obj = {name:'kim'}
+  // localStorage.setItem('data', obj); // 넣을려면 JSON으로 변환해서 바꿔야함
+  localStorage.setItem('data', JSON.stringify(obj));
+  let 꺼낸거 = localStorage.getItem('data');
+  console.log(JSON.parse(꺼낸거));
+
+
+
+
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
   const [sortChecker, setSortChecker] = useState(0);
   const [재고] = useState([10, 11, 12]);
@@ -50,7 +59,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/detail/2')}}>Detail</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -67,7 +76,7 @@ function App() {
                   height: "300px",
                 }}
               ></div>
-              <div className="container" >
+              <div className="container">
                 <div className="row">
                   {
                     // 컴포넌트화

@@ -42,16 +42,18 @@ let cart = createSlice({
       },
       addItem(state, action){
         // console.log(action.payload);
-        const tmpArr = action.payload;
-        const check = state.find((item) => item.id === tmpArr.id);
-        if(!check){
-            console.log('로직수행');
-            state.push(tmpArr);
-            state.map((a,i)=>{
-                console.log(state[i].price);
-            })
-        }
-        
+        // const tmpArr = action.payload;
+        // const check = state.find((item) => item.id === tmpArr.id);
+        // if(!check){
+        //     console.log('로직수행');
+        //     state.push(tmpArr);
+        //     state.map((a,i)=>{
+        //         console.log(state[i].price);
+        //     })
+        //     console.log(state[2]);
+        // }
+        state.push(action.payload)
+
 
 
 
