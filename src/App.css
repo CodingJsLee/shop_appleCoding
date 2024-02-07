@@ -37,6 +37,13 @@
   }
 }
 
+.mainNavbar:hover{
+  transition: all 2s;
+  transform: rotate(360deg);
+  cursor: pointer;
+}
+
+
 .main-bg {
   height: 300px;
   background-image: url("./img/reactMain.png");
@@ -68,3 +75,22 @@
 }
 
 
+
+.recent-products-container {
+  position: relative; /* 자식 요소의 위치를 조정하기 위해 부모 요소에 상대적인 위치 지정 */
+  /* width:100px;
+  height:400px; */
+
+}
+
+.recent-product {
+  position: absolute; /* 절대 위치 지정 */
+  top: 10px; /* 상단 정렬을 위해 0으로 설정 */
+  right: 10px; /* 우측 정렬을 위해 0으로 설정 */
+  z-index: 1; /* 메인보다 한 칸 위에 위치하도록 z-index 값 설정 */
+  border: 1px solid black; /* 테두리 스타일 설정 */
+  background-color: white;
+  width: 150px; /* 너비 설정 */
+  height: 250px; /* 높이 설정 */
+  
+}

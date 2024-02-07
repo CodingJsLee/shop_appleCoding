@@ -6,8 +6,12 @@ import styled from 'styled-components';
 import { Context1 } from './../App';
 import { useDispatch, useSelector } from "react-redux";
 import { addItem} from '../redux/store'
+import MainItem from "../components/MainItem";
 
 function DetailItem(props) {
+
+
+
     let state = useSelector((state)=> state)// redux store 가져와줌
     let dispatch = useDispatch(); // store.js로 요청보내주는 함수임
     let {재고} = useContext(Context1);
@@ -18,7 +22,7 @@ function DetailItem(props) {
     let [count, setCount] = useState(0);
     let [twoSecondModalSwitch, setTwoSecondModalSwitch] = useState(false);
     const mainData = [...props.mainDisplayData];
-    const fixedId = mainData.find((element) => element.id == id);
+    const fixedId = mainData.find((element) =>element.id == id);
     const [num, setNum] = useState('');
     const [taps, setTap] = useState(0); // tap 상태 저장 state
     const [mainFade, setMainFade] = useState('');
@@ -28,21 +32,45 @@ function DetailItem(props) {
         
         let a = setTimeout(() => { setTwoSecondModalSwitch(true) }, 2000);
         let b = setTimeout(() => { setMainFade('detail-cmp-opacity-end') },200 );
+
+        // console.log('--현재 데이터--');
+        // console.log(mainData);
+        // console.log(fixedId);
+        addItemLocalStorage(fixedId);
+
+
         return () => { // clean up function이라는 별명을 가짐.
             clearTimeout([a,b]);
             setMainFade('');
         }
-    }, []);
+    }, [fixedId]);
     
     const OnlyNum = (e) => { 
         const tmp = e.target.value;
        setNum(tmp);
-        console.log(isNaN(num));
+        // console.log(isNaN(num));
         if (isNaN(num)) {
             alert('그러지 마세요.');
         } 
     }
 
+    const addItemLocalStorage = (fixedId) => {
+        let tmp = JSON.parse(localStorage.getItem('watched')) ||[];
+        console.log(tmp);
+        let compareItemTmp = [];
+        if(tmp.length > 0 ){
+            compareItemTmp = tmp.find((item)=> item.id == fixedId.id)
+
+            //값이 널이면 넣기
+            if(!compareItemTmp) {
+                tmp.push(fixedId);
+            }
+
+        } else {
+            tmp.push(fixedId);
+        }
+        localStorage.setItem('watched', JSON.stringify(tmp));
+    } 
 
 
 
@@ -64,7 +92,7 @@ function DetailItem(props) {
                 <p>{fixedId.price}</p>
                 <button className="btn btn-danger" 
                     // onClick={()=>{ dispatch(addItem(fixedId)) }}>
-                    onClick={()=>{ dispatch(addItem({id : 3, name : 'Grey Yordan', count : 1,price:111})) }}>
+                    onClick={()=>{ dispatch(addItem(fixedId)) }}>
                 주문하기
                 </button> 
             </div>
@@ -127,7 +155,6 @@ function Taps(props) {
             returnTag = null;
     }
 
-    
     useEffect(() => {
         let a = setTimeout(() => {
             setFade('end');
@@ -138,6 +165,7 @@ function Taps(props) {
             setFade('');
         }
     }, [props.taps])
+
     return (
         <div className={`start ${fade}`} >
             {returnTag}

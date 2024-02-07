@@ -3,7 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap/";
 
 import reactMain from "./img/reactMain.png";
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import mainData from "./data";
 import MainItem from "./components/MainItem";
 import DetailItem from "./routes/DetailItem";
@@ -14,6 +14,8 @@ import { Button } from "bootstrap";
 import axios from 'axios';
 import Cart from "./components/Cart";
 import { useDispatch, useSelector } from "react-redux";
+import Latestproduct from './components/Latestproduct'
+
 
 // state보관함
 export let Context1 = createContext();
@@ -25,20 +27,38 @@ function App() {
   // localStorage.setItem('data', obj); // 넣을려면 JSON으로 변환해서 바꿔야함
   localStorage.setItem('data', JSON.stringify(obj));
   let 꺼낸거 = localStorage.getItem('data');
-  console.log(JSON.parse(꺼낸거));
-
-
+  // console.log(JSON.parse(꺼낸거));
+  
+  // 최근 본 상품
+  const [latestproduct, setLatesproduct] = useState([]);
 
 
   const [mainDisplayData, setMainDisplayData] = useState(mainData);
   const [sortChecker, setSortChecker] = useState(0);
   const [재고] = useState([10, 11, 12]);
 
-  const [imgIdx, setImgIdx] = useState(0);
+  useEffect(() => {
+    
+    const storedProducts = JSON.parse(localStorage.getItem('watched')) || [];
+    if(storedProducts.length > 0){
+      setLatesproduct(storedProducts);
+    } else {
+      localStorage.setItem('watched',JSON.stringify([]))
+    }
+
+    
+  }, []);
+
+
+
   let navigate = useNavigate();
+
   function mainDataSort() {
     let sortTmp = [...mainData];
-    
+    console.log('sortTmp');
+    console.log(sortTmp);
+
+
     if (sortChecker === 0) {
       setMainDisplayData(sortTmp.sort((a, b) => b.id - a.id));
       setSortChecker(1);
@@ -55,10 +75,12 @@ function App() {
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="/">리액트장인</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{navigate('/')}} className="mainNavbar">리액트장인</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail/2')}}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/1')}}>Detail1</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/2')}}>Detail2</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/3')}}>Detail3</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
           </Nav>
         </Container>
@@ -69,6 +91,7 @@ function App() {
           path="/"
           element={
             <>
+            <Latestproduct latestproduct={latestproduct}/>
               <div
                 //className="main-bg"
                 style={{
@@ -76,6 +99,7 @@ function App() {
                   height: "300px",
                 }}
               ></div>
+              
               <div className="container">
                 <div className="row">
                   {
@@ -89,6 +113,7 @@ function App() {
                       );
                     })
                   }
+                  
                   <div>
                     <button onClick={() => {
                     axios.get('https://codingapple1.github.io/shop/data2.json')
@@ -108,6 +133,7 @@ function App() {
                   </div>
                 </div>
               </div>
+              
             </>
           }
         />

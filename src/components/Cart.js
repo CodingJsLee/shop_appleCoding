@@ -7,7 +7,7 @@ function Cart() {
 
     let state = useSelector((state)=> state)// redux store 가져와줌
     let dispatch = useDispatch(); // store.js로 요청보내주는 함수임
-
+    console.log(state.cart);
     return (
         <div>
             <h6>{state.user.name} {state.user.age}의 장바구니</h6>
@@ -29,7 +29,7 @@ function Cart() {
                     state.cart.map((a, i)=>
                     <tr key={i}>
                         <td>{state.cart[i].id}</td>
-                        <td>{state.cart[i].name}</td>
+                        <td>{state.cart[i].title}</td>
                         <td>{state.cart[i].count}</td>
                         <td>
                         <button onClick={()=>{ dispatch(addCount(state.cart[i].id)) }}>+</button>

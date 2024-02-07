@@ -10,6 +10,7 @@ let mainData = [
     content: "JavaScript",
     price: 67000,
     imges: jsImg,
+    count : 1
   },
 
   {
@@ -18,6 +19,7 @@ let mainData = [
     content: "HTML5",
     price: 35000,
     imges: html5Img,
+    count : 1
   },
 
   {
@@ -26,6 +28,7 @@ let mainData = [
     content: "CSS3",
     price: 35000,
     imges: cssImg,
+    count : 1
   },
 ];
 
